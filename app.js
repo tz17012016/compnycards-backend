@@ -7,8 +7,10 @@ const morgan = require("morgan");
 const connectDB = require("./db/mongoConnect");
 const {routerInit, originAllow} = require("./routes/config_routes");
 
+dotenv.config({ path: './config/config.env' });
+connectDB();
 const app = express();
-dotenv.config();
+app.use(express.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname,"public")));
 
@@ -17,11 +19,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 originAllow(app);
 routerInit(app);
-connectDB();
+
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(
+const server = app.listen(
   PORT,
   console.log(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
