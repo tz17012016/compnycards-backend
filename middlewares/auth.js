@@ -7,7 +7,7 @@ exports.authToken = (req, res, next) => {
     return res.status(401).json({ msg: "you must send token ! ,read the docs of the api !!!!" });
   }
   try {
-    let decodeToken = jwt.verify(validToken, process.env.JWT_SECRET.jwtSecret);
+    let decodeToken = jwt.verify(validToken, process.env.JWT_SECRET);
     req.tokenData = decodeToken;
     next();
   }
