@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const {UserModel} = require("../models/userModel");
-const { config } = require("../config/secretData")
 
 exports.authToken = (req, res, next) => {
   let validToken = req.header("x-auth-token");
@@ -8,7 +7,7 @@ exports.authToken = (req, res, next) => {
     return res.status(401).json({ msg: "you must send token ! ,read the docs of the api !!!!" });
   }
   try {
-    let decodeToken = jwt.verify(validToken, config.jwtSecret);
+    let decodeToken = jwt.verify(validToken, process.env.JWT_SECRET.jwtSecret);
     req.tokenData = decodeToken;
     next();
   }
